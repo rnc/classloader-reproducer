@@ -74,13 +74,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.openshift.jenkins.plugins</groupId>
-      <artifactId>openshift-client</artifactId>
-      <version>${openshift.client.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>pipeline-build-step</artifactId>
       <version>2.7</version>
@@ -303,21 +296,10 @@
       </plugin>
     </plugins>
 
-<!--    <testResources>-->
-<!--      <testResource>-->
-<!--        <includes>-->
-<!--          <include>vars/**/*.groovy</include>-->
-<!--        </includes>-->
-<!--        <directory>${project.basedir}</directory>-->
-<!--      </testResource>-->
-<!--      <testResource>-->
-<!--        <directory>test/resources</directory>-->
-<!--      </testResource>-->
-<!--    </testResources>-->
-<!--    <resources>-->
-<!--      <resource>-->
-<!--        <directory>resources</directory>-->
-<!--      </resource>-->
-<!--    </resources>-->
+    <testResources>
+      <testResource>
+        <directory>test/resources</directory>
+      </testResource>
+    </testResources>
   </build>
 </project>

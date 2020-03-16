@@ -23,11 +23,13 @@ class SetupAdvisorySpec extends JenkinsPipelineSpecification {
             System.out.println("### Errata classloader " + errata.class.getClassLoader())
             def advisories = setupAdvisory.createAdvisories(null, null, product, release, errata)
         then:
-            System.out.println("### reflected " + Errata.class + " and returned " + advisories.class)
+            advisories.class.getClassLoader() != setupAdvisory.class.getClassLoader()
             advisories.class.getCanonicalName().equals(errata.class.getCanonicalName())
-            advisories.class != errata.class
-            advisories.class.getClassLoader() == setupAdvisory.class.getClassLoader()
-            advisories.class.getClassLoader() != errata.class.getClassLoader()
+            def reflected = Class.forName("com.redhat.cpaas.pipeline.model.Errata", true, setupAdvisory.class.getClassLoader()).newInstance()
+            System.out.println("### reflected " + reflected.class + " and returned " + advisories.class)
+            advisories.class.getClassLoader() == errata.class.getClassLoader()
+            advisories.class == reflected.class
+            advisories.class == errata.class
     }
 
 
@@ -43,7 +45,7 @@ class SetupAdvisorySpec extends JenkinsPipelineSpecification {
             advisories.class.getClassLoader() == setupAdvisory.class.getClassLoader()
             advisories.class.getClassLoader() != errata.class.getClassLoader()
             advisories.class.getCanonicalName().equals(errata.class.getCanonicalName())
-            def reflected = Class.forName("com.redhat.cpaas.pipeline.model.Errata", true, setupAdvisory.class.getClassLoader()).newInstance()
+           def reflected = Class.forName("com.redhat.cpaas.pipeline.model.Errata", true, setupAdvisory.class.getClassLoader()).newInstance()
             System.out.println("### reflected " + reflected.class + " and returned " + advisories.class)
             advisories.class == reflected.class
     }
